@@ -79,7 +79,7 @@ Para executar o script e crirar o boot node digite no terminal dentro da diretor
 ````
 Adicionalmente, podem ser alterados os parâmetros por linha de comando adicionando a flag correspondente ao paramentro, exemplo para alterar o BOOTNODEID:
 ````shell script  
-./boot.sh -i 192.168.0.177      #iniciar alterando ip do bootnode
+./boot.sh -b 192.168.0.177      #iniciar alterando ip do bootnode
 ````
 
 A saída esperada escrita no log, indicando que a rede foi inicializada e qual é o endereço de conexão (enode) de novos nós.

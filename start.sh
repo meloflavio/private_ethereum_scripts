@@ -4,7 +4,7 @@ OPERATIONTYPE=start
 NETWORKID=1288
 VERSION=1.9.20-979fc968
 NODETYPE=node
-DATADIR=$HOME/.ethereum/private/mine
+DATADIR=$HOME/.ethereum/private/$NODETYPE
 MYNODEPORT=30303
 BOOTNODEIP=192.168.1.115
 BOOTNODEPORT=30301
@@ -13,7 +13,7 @@ BOOTNODEID=4e87faaa0ed677c3ec389f3ac37f8b0e366876f73e72764e3518031daca322768befb
 
 UNZIP="tar -xvzf"
 IPC=''
-DATADIR="$HOME/."$(echo $DATADIR |cut -d'.' -f 2)
+
 while getopts v:t:o:i:d:p:b:r:n: flag
 do
     case "${flag}" in
@@ -92,7 +92,7 @@ if [[ "$OPERATIONTYPE" == "start" ]]; then
     adressAccount=$(echo $output | $GREP "\{([^}]+)\}" | $GREP "\w+")
     echo $NETWORKID
     if [[ "$NODETYPE" == "node"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR  --rpc --rpcapi "eth,web3,net,admin,debug,personal,miner" --allow-insecure-unlock
+        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr 'localhost' --http.port 8545 --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock "0xfd96fcc76da5e04604270bac93cd0e2acdcd670d" --password .accountpassword
     elif [[ "$NODETYPE" == "mine"* ]]; then
         $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="full"  --gasprice "0"  --etherbase $adressAccount --unlock $adressAccount --password $accountFile --mine --miner.threads 1
     fi
