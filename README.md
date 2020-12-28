@@ -65,7 +65,7 @@ Para a execução deste e dos próximos nós faz necessária a definição de al
 
 1. VERSION (-v): Versão do arquivo binário do Ethereum a ser instalado.
 1. NETWORKID (-n): Deve ser o mesmo do arquivo genesis.
-1. BOOTDATADIR (-d): Pasta no computador em que  os arquivos da rede serão armazenados. Por padrão: $HOME/.ethereum/private/boot.
+1. BOOTNODEDATADIR (-d): Pasta no computador em que  os arquivos da rede serão armazenados. Por padrão: $HOME/.ethereum/private/boot.
 1. BOOTNODEKEY (-k): Um nó de inicialização pede uma chave hexadecimal e através dela será gerado um ID  descrito com um esquema de URL chamado “enode” para conexão de outros nós, deixamos esse valor pré-definido para podermos ter certeza da url de conexão que será utilizado pelos demais nós. Esse valor pode ser gerado pelo comando: bootnode -genkey bootnode.key.
 1. BOOTNODEIP (-b): O IP da máquina em que será instanciado o bootnode.
 1. BOOTNODEPORT (-p): A porta em que o boot node deverá expor à rede. Por padrão 30301.
