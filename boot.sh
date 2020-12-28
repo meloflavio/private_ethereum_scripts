@@ -59,7 +59,7 @@ if [[ "$OPERATIONTYPE" == "start" ]]; then
         $FILE/geth --datadir=$BOOTNODEDATADIR init genesis.json 
         sleep 3
     fi
-    $FILE/geth --nousb --datadir=$BOOTNODEDATADIR --nodekeyhex=$BOOTNODEKEY --networkid $NETWORKID  --nat extip:$BOOTNODEIP --port $BOOTNODEPORT&>boot.log&
+    $FILE/geth --nousb --datadir=$BOOTNODEDATADIR --nodekeyhex=$BOOTNODEKEY --networkid $NETWORKID  --nat extip:$BOOTNODEIP --port $BOOTNODEPORT>boot.log
 elif [[ "$OPERATIONTYPE" == "stop" ]]; then
     pkill -f "port $BOOTNODEPORT"
 fi
