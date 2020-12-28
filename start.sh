@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 OPERATIONTYPE=start
-NETWORKID=1228800
+NETWORKID=1288
 VERSION=1.9.20-979fc968
 NODETYPE=node
 DATADIR=$HOME/.ethereum/private/mine
