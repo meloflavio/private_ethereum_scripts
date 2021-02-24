@@ -44,8 +44,8 @@ fi
 accountFile=".accountpassword"
 privateFile=".privatekey"
 if [[ "$NODETYPE" == "mine"* ]]; then
-    accountFile=".accountpassword2"
-    privateFile=".privatekey2"
+#    accountFile=".accountpassword2"
+#    privateFile=".privatekey2"
     MYNODEPORT=$(($MYNODEPORT+10))
 fi
 
@@ -105,13 +105,16 @@ if [[ "$OPERATIONTYPE" == "start" ]]; then
       fi
       sleep 3
       adressAccount=$(echo $output | $GREP "\{([^}]+)\}" | $GREP "\w+")
+      adressAccount=$(echo $adressAccount | cut -d' ' -f1)
     fi
+
+    sleep 3
 
     #Verifica qual o nó vai ser iniciado e executa o comando referente a esse nó
     if [[ "$NODETYPE" == "node"* ]]; then
         $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr 'localhost' --http.port 8545 --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock $adressAccount --password .accountpassword
     elif [[ "$NODETYPE" == "mine"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="full"  --gasprice "0"  --etherbase $adressAccount --mine --miner.threads 1
+        $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="full"  --miner.gasprice "0"  --miner.etherbase $adressAccount --mine --miner.threads 4 --unlock $adressAccount --password .accountpassword
     elif [[ "$NODETYPE" == "boot" ]]; then
         $FILE/geth --nousb --datadir=$DATADIR  --nodekeyhex=$BOOTNODEKEY --networkid $NETWORKID  --nat extip:$BOOTNODEIP --port $BOOTNODEPORT
     fi
