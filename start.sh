@@ -85,7 +85,10 @@ fi
 
 
 if [[ "$OPERATIONTYPE" == "start" ]]; then
-#Verifica se o blocco inicial foi criado, caso contrário o inicia
+
+
+
+    #Verifica se o blocco inicial foi criado, caso contrário o inicia
     if [  -d "$DATADIR" ]; then
         echo 'Genesis iniciada'
     else
@@ -96,27 +99,29 @@ if [[ "$OPERATIONTYPE" == "start" ]]; then
 
     #Se não é nó de boot, pega o endereço da carteira base do nó
     if [[ "$NODETYPE" != "boot" ]]; then
-      output=$($FILE/geth  --verbosity=0 --datadir=$DATADIR account list)
-      if [[ "$output" == "Account #0"* ]]; then
+      output=$($FILE/geth  --verbosity=0 --datadir=$DATADIR account list)  #lista todas as contas do nó
+      if [[ "$output" == "Account #0"* ]]; then   #verifica se tem alguma conta no retorno da chamada anterior
           echo 'Conta #0 presente'
       else
-          $FILE/geth --datadir=$DATADIR account import --password $accountFile $privateFile
-          output=$($FILE/geth  --verbosity=0 --datadir=$DATADIR account list)
+          $FILE/geth --datadir=$DATADIR account import --password $accountFile $privateFile #importa a conta quando não
+                                                                                            # existe nenhuma conta
+          output=$($FILE/geth  --verbosity=0 --datadir=$DATADIR account list) #lista todas as contas do nó, agora com o
+                                                                              # endereço da conta importada
       fi
       sleep 3
-      adressAccount=$(echo $output | $GREP "\{([^}]+)\}" | $GREP "\w+")
-      adressAccount=$(echo $adressAccount | cut -d' ' -f1)
+      adressAccount=$(echo $output | $GREP "\{([^}]+)\}" | $GREP "\w+")  #retira apenas os endereços da conta
+      adressAccount=$(echo $adressAccount | cut -d' ' -f1) #seleciona apenas o primeiro endereço
     fi
 
     sleep 3
 
     #Verifica qual o nó vai ser iniciado e executa o comando referente a esse nó
     if [[ "$NODETYPE" == "node"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr 'localhost' --http.port 8545 --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock $adressAccount --password .accountpassword
+        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr 'localhost' --http.port 8545  --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock $adressAccount  --password .accountpassword
     elif [[ "$NODETYPE" == "mine"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="full"  --miner.gasprice "0"  --miner.etherbase $adressAccount --mine --miner.threads 4 --unlock $adressAccount --password .accountpassword
+        $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="fast"  --miner.gasprice "0" --miner.etherbase $adressAccount --mine --miner.threads 4 --unlock $adressAccount --password .accountpassword
     elif [[ "$NODETYPE" == "boot" ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR  --nodekeyhex=$BOOTNODEKEY --networkid $NETWORKID  --nat extip:$BOOTNODEIP --port $BOOTNODEPORT
+        $FILE/geth --nousb --datadir=$DATADIR  --nodekeyhex=$BOOTNODEKEY --networkid $NETWORKID --nat extip:$BOOTNODEIP --port $BOOTNODEPORT
     fi
     sleep 3
 elif [[ "$OPERATIONTYPE" == "stop" ]]; then
