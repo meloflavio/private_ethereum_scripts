@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 VERSIONGETH=1.9.20-979fc968
+GETHPATH=''
 SOLCVERSION='v0.8.1'
 FILENAME=''
 EXT=''
@@ -47,6 +48,11 @@ COMPILEDEXT=$(echo $FILENAMEEXT| cut -d'.' -f 2)
   fi
 done
 
-../geth-alltools-$OS-amd64-$VERSIONGETH/geth attach http://localhost:8545
+
+if [[ "$GETHPATH" == "" ]]; then
+GETHPATH=../geth-alltools-$OS-amd64-$VERSIONGETH/geth
+fi
+
+$GETHPATH attach http://localhost:8545
 
 

@@ -1,53 +1,11 @@
 pragma solidity >=0.4.22 <=0.8.1;
 
-contract ProfessionalRegistry {
-    Professional [] public registeredProfessionals;
-    event ProfessionalCreated(address contractAddress);
-    mapping(address => Professional []) registeredProfessionalsAddress;
-    mapping(address => bool) professionalExists;
-    //details
-    mapping(string => string) lastDetails;
-    string stringDetails;
-    event lastDetailsCreated(string stringDetails);
-    //details
-
-
-    function createProfessional(address  _professionalAddress,  string memory _nome,  string memory _cpf, string memory _registry, string memory _email, string memory _telephone) public {
-        require(!professionalExists[_professionalAddress], "Professional already exists.");
-        Professional newProfessional = new Professional(msg.sender, _professionalAddress, _nome, _cpf, _registry, _email, _telephone);
-        emit ProfessionalCreated(address(newProfessional));
-        professionalExists[_professionalAddress] = true;
-
-        //details
-        lastDetails['nome'] = _nome;
-        lastDetails['cpf'] = _cpf;
-        lastDetails['registry'] = _registry;
-        lastDetails['email'] = _email;
-        lastDetails['telephone'] = _telephone;
-        //details
-
-        registeredProfessionalsAddress[_professionalAddress].push(newProfessional);
-        registeredProfessionals.push(newProfessional);
-    }
-    //details
-    function getLastDetails() public returns (string memory) {
-        stringDetails = string(abi.encodePacked("Professional - Nome: ",lastDetails['nome'],", CPF: ",lastDetails['cpf'],", Registry: ",lastDetails['registry'],", Email: ",lastDetails['email'],", Telephone: ",lastDetails['telephone']));
-        emit lastDetailsCreated(stringDetails);
-        return stringDetails;
-    }
-    //details
-
-
-    function getDeployedProfessionals() public view returns (Professional[] memory) {
-        return registeredProfessionals;
-    }
-
-    function getDeployedProfessionalByAddress(address _professionalAddress) public view returns (Professional[] memory ) {
-        return registeredProfessionalsAddress[_professionalAddress];
-    }
-}
 
 contract Professional {
+
+
+    event showDetails(string stringDetails);
+    string stringDetails;
 
     // Owner address
     address public owner;
@@ -67,15 +25,15 @@ contract Professional {
         _;
     }
 
-    constructor(address _owner, address  _professionalAddress, string memory _nome, string memory _cpf, string memory _registry, string memory _email, string memory _telephone)  {
-        owner = _owner;
-        professionalAddress = _professionalAddress;
-        nome = _nome;
-        cpf = _cpf;
-        registry = _registry;
-        email = _email;
-        telephone = _telephone;
+    constructor()  {
+        owner = msg.sender;
     }
+
+    function getDetails() public {
+        stringDetails = string(abi.encodePacked("Professional - Nome: ",nome,", CPF: ",cpf,", Registry: ",registry,", Email: ",email,", Telephone: ",telephone));
+        emit showDetails(stringDetails);
+    }
+
 
     function getProfessionalDetails() public view returns (
         address,  address , string memory, string memory, string memory, string memory, string memory) {
@@ -90,7 +48,8 @@ contract Professional {
         );
     }
 
-    function setProfessionalDetails( string memory _nome,string memory _cpf, string memory _registry, string memory _email, string memory _telephone) public  {
+    function setProfessionalDetails( address _professionalAddress, string memory _nome,string memory _cpf, string memory _registry, string memory _email, string memory _telephone) public  {
+        professionalAddress = _professionalAddress;
         nome = _nome;
         cpf = _cpf;
         registry = _registry;
