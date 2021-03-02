@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.22 <=0.8.1;
 
 
-contract Professional {
+contract Profissional {
 
 
     event showDetails(string stringDetails);
@@ -11,12 +12,12 @@ contract Professional {
     address public owner;
 
     /// Marriage Vows
-    address public professionalAddress;
+    address public profissionalAddress;
     string public nome;
     string public cpf;
-    string public registry;
+    string public registroMedico;
     string public email;
-    string public telephone;
+    string public telefone;
     /**
     * @dev Throws if called by any account other than the owner
     */
@@ -30,31 +31,31 @@ contract Professional {
     }
 
     function getDetails() public {
-        stringDetails = string(abi.encodePacked("Professional - Nome: ",nome,", CPF: ",cpf,", Registry: ",registry,", Email: ",email,", Telephone: ",telephone));
+        stringDetails = string(abi.encodePacked("Profissional - Nome: ",nome,", CPF: ",cpf,", Registro médico: ",registroMedico,", E-mail: ",email,", Telefone: ",telephone));
         emit showDetails(stringDetails);
     }
 
 
-    function getProfessionalDetails() public view returns (
+    function getProfissionalDetails() public view returns (
         address,  address , string memory, string memory, string memory, string memory, string memory) {
         return (
         owner,
-        professionalAddress,
+        profissionalAddress,
         nome,
         cpf,
-        registry,
+        registroMedico,
         email,
-        telephone
+        telefone
         );
     }
 
-    function setProfessionalDetails( address _professionalAddress, string memory _nome,string memory _cpf, string memory _registry, string memory _email, string memory _telephone) public  {
-        professionalAddress = _professionalAddress;
+    function setProfissionalDetails( address _profissionalAddress, string memory _nome,string memory _cpf, string memory _registroMedico, string memory _email, string memory _telefone) public  {
+        profissionalAddress = _profissionalAddress;
         nome = _nome;
         cpf = _cpf;
-        registry = _registry;
+        registroMedico = _registroMedico;
         email = _email;
-        telephone = _telephone;
+        telefone = _telefone;
     }
 
 
