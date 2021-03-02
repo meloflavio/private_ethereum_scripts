@@ -31,7 +31,7 @@ contract Profissional {
     }
 
     function getDetails() public {
-        stringDetails = string(abi.encodePacked("Profissional - Nome: ",nome,", CPF: ",cpf,", Registro médico: ",registroMedico,", E-mail: ",email,", Telefone: ",telephone));
+        stringDetails = string(abi.encodePacked("Profissional - Nome: ",nome,", CPF: ",cpf,", Registro medico: ",registroMedico,", E-mail: ",email,", Telefone: ",telefone));
         emit showDetails(stringDetails);
     }
 
