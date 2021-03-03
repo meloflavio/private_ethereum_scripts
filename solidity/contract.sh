@@ -31,7 +31,7 @@ else
     | tr -d \" \
     | xargs -I{} wget -O solc$EXT {}
 
-    chmod +x solc
+    chmod +x solc$EXT
 fi
 
 
