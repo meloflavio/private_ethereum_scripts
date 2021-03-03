@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.22 <=0.8.1;
 
-
 contract Profissional {
-
 
     event showDetails(string stringDetails);
     string stringDetails;
-
     // Owner address
     address public owner;
 
@@ -18,13 +15,6 @@ contract Profissional {
     string public registroMedico;
     string public email;
     string public telefone;
-    /**
-    * @dev Throws if called by any account other than the owner
-    */
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
-    }
 
     constructor()  {
         owner = msg.sender;
@@ -34,7 +24,6 @@ contract Profissional {
         stringDetails = string(abi.encodePacked("Profissional - Nome: ",nome,", CPF: ",cpf,", Registro medico: ",registroMedico,", E-mail: ",email,", Telefone: ",telefone));
         emit showDetails(stringDetails);
     }
-
 
     function getProfissionalDetails() public view returns (
         address,  address , string memory, string memory, string memory, string memory, string memory) {
@@ -57,6 +46,4 @@ contract Profissional {
         email = _email;
         telefone = _telefone;
     }
-
-
 }
