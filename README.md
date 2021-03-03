@@ -11,6 +11,7 @@ Os principais componentes do projeto são:
 Estes arquivos estão pre configurados para o funcionamento de uma rede privada com 2 carteiras pré financiadas e servidor HTTP-RPC ativado. Para utilizar o script sigua os passos.
 
 OBS: Para um tutorial em vídeo acesse: https://youtu.be/x76MluZ_cAQ
+OBS: [Para um tutorial de interação com os _smart contracts](docs/contract.md)
 # Alterar Genesis.json (Opcional)
 Para iniciar uma nova cadeia precisamos definir o bloco inicial com algumas configurações que indicaram como novos blocos serão inseridos, dentre estas definições destacamos:
 1. “config”: a configuração da blockchain.
