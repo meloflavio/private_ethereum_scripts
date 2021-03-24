@@ -14,7 +14,7 @@ Para executar este script e compilar o contrato inteligente digite no terminal d
 ````
 Este script primeiramente verifica o sistema operacional para montar a url do compilador de contratos solidity e dá permissão de execução a este arquivo após o download ser concluído.
 
-Após o download o contrato é compilado gerando dois arquivos, uma abi e outro bin.
+Após o download o contrato é compilado gerando dois arquivos, um abi e outro bin.
 
 Para utilizá-los dentro da blockchain, estes precisaram ser transformados em variáveis javascripts. Dessa forma, o script pega o conteúdo destes arquivos compilados e cria variáveis javascript que podem ser importadas no console da ferramenta geth.
 
@@ -50,7 +50,7 @@ var gas = eth.estimateGas({from: eth.coinbase, data: comp})
 var factory =  eth.contract(abi) 
 #Isso permite que você interaja com contratos inteligentes como se fossem objetos JavaScript.
 ````
-5. Criamos uma nova instância do contrato e o enviamos para mineração.
+5. Criamos uma instância do contrato e o enviamos para mineração.
 ````js
 var profissionalContract = factory.new({data: comp, gas: gas}, function(e, contract) {
     if(!e) {
