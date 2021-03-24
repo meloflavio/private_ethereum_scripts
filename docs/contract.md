@@ -1,4 +1,4 @@
-# Contract.sh (Opcional)
+# Roteiro para deploy e utilização de contratos inteligentes
 Esse script foi desenvolvido com o objetivo de demostrar o funcionamento de um contrato inteligente com a rede blockchain privada da plataforma Ethereum criada com esta ferramenta.
 
 Como nos arquivos principais o script contém alguns parâmetros:
