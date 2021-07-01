@@ -117,7 +117,7 @@ if [[ "$OPERATIONTYPE" == "start" ]]; then
 
     #Verifica qual o nó vai ser iniciado e executa o comando referente a esse nó
     if [[ "$NODETYPE" == "node"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr '0.0.0.0' --http.port 8545  --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock $adressAccount  --password .accountpassword  --http.vhosts="*" --rpcaddr='*'
+        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr '0.0.0.0' --http.port 8545  --http.api admin,eth,net,txpool,web3  --allow-insecure-unlock --unlock $adressAccount  --password .accountpassword  --http.vhosts="*" --rpcaddr='*'
     elif [[ "$NODETYPE" == "mine"* ]]; then
         $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="fast"  --miner.gasprice "0" --miner.etherbase $adressAccount --mine --miner.threads 4 --unlock $adressAccount --password .accountpassword
     elif [[ "$NODETYPE" == "boot" ]]; then
