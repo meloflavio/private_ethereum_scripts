@@ -10,7 +10,7 @@ DATADIR=""
 MYNODEPORT=30303
 
 BOOTNODEKEY=8b7aaa22a34451deac5d53b511cc66a5607c048bfd689ab711a8845cfd254421
-BOOTNODEIP=127.0.0.1
+BOOTNODEIP=20.201.122.87
 BOOTNODEPORT=30301
 BOOTNODEID=4e87faaa0ed677c3ec389f3ac37f8b0e366876f73e72764e3518031daca322768befb783be5c4aea4200f3439f4361571e860c38776142094adc35913964096b
 
@@ -37,7 +37,7 @@ done
 
 #Se datadir não definido pela flag, define datadir padrão
 if [[ "$DATADIR" == "" ]]; then
-DATADIR=$HOME/.ethereum/private/$NODETYPE
+DATADIR=$HOME/.ethereum/local/$NODETYPE
 fi
 
 #Define password e chave privada do nó de aplicacao ou minerador
@@ -117,9 +117,9 @@ if [[ "$OPERATIONTYPE" == "start" ]]; then
 
     #Verifica qual o nó vai ser iniciado e executa o comando referente a esse nó
     if [[ "$NODETYPE" == "node"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'full' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr 'localhost' --http.port 8545  --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock $adressAccount  --password .accountpassword
+        $FILE/geth --nousb --datadir=$DATADIR --syncmode 'fast' --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT --http --http.addr 'localhost' --http.port 8545  --http.api admin,eth,miner,net,txpool,personal,web3  --allow-insecure-unlock --unlock $adressAccount  --password .accountpassword
     elif [[ "$NODETYPE" == "mine"* ]]; then
-        $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="fast"  --miner.gasprice "0" --miner.etherbase $adressAccount --mine --miner.threads 4 --unlock $adressAccount --password .accountpassword
+        $FILE/geth --nousb --datadir=$DATADIR --bootnodes "enode://$BOOTNODEID@$BOOTNODEIP:$BOOTNODEPORT" --networkid $NETWORKID --port $MYNODEPORT     --syncmode="fast"  --miner.gasprice "0" --miner.etherbase $adressAccount --mine --miner.threads 8 --unlock $adressAccount --password .accountpassword
     elif [[ "$NODETYPE" == "boot" ]]; then
         $FILE/geth --nousb --datadir=$DATADIR  --nodekeyhex=$BOOTNODEKEY --networkid $NETWORKID --nat extip:$BOOTNODEIP --port $BOOTNODEPORT
     fi
