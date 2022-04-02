@@ -4,7 +4,6 @@ Este projeto contem scripts para a criação e configuração de uma rede blockc
 Os principais componentes do projeto são:
 1. genesis.json
 1. start.sh
-1. boot.sh
 1. password.txt
 1. private.txt
 
@@ -78,11 +77,11 @@ Atenção aos parâmetros BOOTNODEIP e BOOTNODEPORT, esses devem estar corretame
 Para executar o script e crirar o boot node digite no terminal dentro da diretorio do projeto:
 
 ````shell script 
-./boot.sh                       #iniciar com todos os parâmetros padrões
+./start.sh -t boot                       #iniciar com todos os parâmetros padrões
 ````
 Adicionalmente, podem ser alterados os parâmetros por linha de comando adicionando a flag correspondente ao paramentro, exemplo para alterar o BOOTNODEID:
 ````shell script  
-./boot.sh -b 192.168.0.177      #iniciar alterando ip do bootnode
+./start.sh -t boot -b 192.168.0.177      #iniciar alterando ip do bootnode
 ````
 
 A saída esperada escrita no log, indicando que a rede foi inicializada e qual é o endereço de conexão (enode) de novos nós.
